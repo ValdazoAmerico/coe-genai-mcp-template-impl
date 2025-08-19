@@ -1,0 +1,1 @@
+# coe-genai-mcp-template-impl
