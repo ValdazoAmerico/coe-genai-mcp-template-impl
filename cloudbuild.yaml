@@ -1,0 +1,28 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/fastmcp-server', '.']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/fastmcp-server']
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'fastmcp-server'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/fastmcp-server'
+      - '--platform'
+      - 'managed'
+      - '--region'
+      - 'us-central1'
+
+substitutions:
+  _REGION: 'us-central1'
+  _SERVICE_NAME: 'fastmcp-server'
+
+images:
+  - 'gcr.io/$PROJECT_ID/fastmcp-server'
+
+timeout: '1200s'
