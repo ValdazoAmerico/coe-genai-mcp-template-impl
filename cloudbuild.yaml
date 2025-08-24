@@ -1,3 +1,5 @@
+serviceAccount: projects/uma-datascience-dev/serviceAccounts/agent-builder-sa@uma-datascience-dev.iam.gserviceaccount.com
+
 steps:
   # Paso 1: Construir la imagen Docker
   - name: 'gcr.io/cloud-builders/docker'
@@ -22,7 +24,9 @@ steps:
       '--image', 'us-docker.pkg.dev/uma-datascience-dev/deep-learning-images/fastmcp-server:$COMMIT_SHA',
       '--platform', 'managed',
       '--region', 'us-central1',
-      '--allow-unauthenticated'
+      '--allow-unauthenticated',
+      '--service-account', 'fastmcp-server-sa@uma-datascience-dev.iam.gserviceaccount.com'
+      
     ]
 
 # Imagen de salida para auditoría
